@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>🌈 Pride Packs</title>
+	<meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cannon.js/0.6.2/cannon.min.js"></script>
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+		body {
+			overflow-y: scroll;
+			margin: 0;
+			background: black;
+			color: white;
+			width: 100%;
+			font-family: 'Public Sans', sans-serif;
+			font-size: 1.25rem;
+			user-select: none;
+		}
+		#boxes-canvas {
+			width: 100%;
+			height: 100%;
+			position: fixed;
+			z-index: 1;
+		}
+		main {
+			position: fixed;
+			margin-left: 50vw;
+			margin-top: 50vh;
+			transform: translate(-50%, -50%);
+			padding: 2rem;
+			padding-top: 1.5rem;
+			top: 0;
+			left: 0;
+			z-index: 2;
+			text-align: center;
+			background: #00000066;
+			border: solid 1px #ffffff22;
+			backdrop-filter: blur(1rem);
+			width: 24rem;
+			animation: 2s main-enter;
+		}
+		@keyframes main-enter {
+			0% {opacity: 0;}
+			50% {opacity: 0; transform: translate(-50%, -50%) scale(0.95) translateY(0.25rem);}
+		}
+		select {
+			background: #00000000;
+			color: white;
+			font-family: inherit;
+			font-size: inherit;
+			border: none;
+			width: 16rem;
+			&:focus {
+				background: black;
+			}
+		}
+		label {
+			width: 8rem;
+			display: inline-block;
+			text-align: left;
+		}
+		#xp {
+			display: block;
+			display: inline-block;
+		}
+		button {
+			background: #ffffff00;
+			color: white;
+			font-family: inherit;
+			font-size: inherit;
+			border: solid 1px #ffffff22;
+			cursor: pointer;
+			margin-top: 1rem;
+			padding: 0.5rem 1rem;
+			&:hover {
+				background: #ffffff22;
+			}
+		}
+		p {
+			text-align: left;
+			user-select: text;
+		}
+		::selection {
+			color: black;
+			background: white;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="boxes-canvas"></canvas>
+	<main>
+		<p style="font-size: 1.5rem; margin: 0;">Pride Packs</p>
+		<p>A collection of resource packs themed around pride flags. Makes client-side changes to XP bar and elytra.</p>
+		<label>Flag</label><select value="Rainbow" id="select-flag"></select>
+		<br>
+		<label>Version</label><select value="75" id="select-version">
+			<option value="75">1.21.2 - 1.21.11</option>
+			<option value="34">1.20.2 - 1.21.1</option>
+			<option value="15">1.20 - 1.20.1</option>
+			<option value="13">1.19.4</option>
+			<option value="12">1.19.3</option>
+			<option value="9">1.19 - 1.19.2</option>
+			<option value="8">1.18 - 1.18.2</option>
+			<option value="7">1.17 - 1.17.1</option>
+			<option value="6">1.16.2 - 1.161.5</option>
+			<option value="5">1.15 - 1.16.1</option>
+			<option value="4">1.13 - 1.14.4</option>
+			<option value="3">1.11 - 1.12.2</option>
+			<option value="2">1.9 - 1.10.2</option>
+			<option value="1">1.6.1 - 1.8.9</option>
+		</select>
+		<br>
+		<br>
+		<canvas id="downscale-canvas"></canvas>
+		<br>
+		<img id="xp"/>
+		<br>
+		<button id="downloadbtn">Download</button>
+	</main>
+	<script src="boxes.js"></script>
+	<script src="armor.js"></script>
+	<script>
+		let options = [
+			{name: "Acearo", flag: "https://upload.wikimedia.org/wikipedia/commons/1/12/Aroace_flag.svg", colors: [0xe48c04, 0x64acdc, 0xeccc04]},
+			{name: "Agender", flag: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Agender_pride_flag.svg", colors: [0xbcc4c4, 0xb4f484, 0x040404]},
+			{name: "Aromantic", flag: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Aromantic_Pride_Flag.svg", colors: [0xacd474, 0x3ca444, 0x040404]},
+			{name: "Asexual", flag: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Asexual_Pride_Flag.svg", colors: [0x840484, 0xa4a4a4, 0x040404]},
+			{name: "Bigender", flag: "https://upload.wikimedia.org/wikipedia/commons/9/92/Bigender_Flag.svg", colors: [0xc47ca4, 0xd4ccea, 0x6c84d4]},
+			{name: "Bisexual", flag: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Bisexual_Pride_Flag.svg", colors: [0x043ca4, 0x744c94, 0xd40474]},
+			{name: "Demigender", flag: "https://upload.wikimedia.org/wikipedia/commons/8/83/Deminonbinary_flag.svg", colors: [0xc4c4c4, 0x848484, 0xfcfc74]},
+			{name: "Demiromantic", flag: "https://upload.wikimedia.org/wikipedia/commons/3/36/Demiromantic_Pride_Flag.svg", left: true, colors: [0xd4d4d4, 0x040404, 0x3ca444]},
+			{name: "Demisexual", flag: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Demisexual_Pride_Flag.svg", left: true, colors: [0xd4d4d4, 0x7c0474, 0x040404]},
+			{name: "Gay", flag: "https://upload.wikimedia.org/wikipedia/commons/6/66/New_Gay_Pride_Flag.svg", colors: [0x9cecc4, 0x3c1c7c, 0x544ccc]},
+			{name: "Genderfluid", flag: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Genderfluidity_Pride-Flag.svg", colors: [0xbc1cd4, 0x343cbc, 0xfc74a4]},
+			{name: "Genderqueer", flag: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Genderqueer_Pride_Flag.svg", colors: [0xb47cdc, 0x4c8424, 0xfff]},
+			{name: "Intersex", flag: "https://upload.wikimedia.org/wikipedia/commons/3/38/Intersex_Pride_Flag.svg", colors: [0x7c04ac, 0xfcdc04, 0xffffff]},
+			{name: "Lesbian", flag: "https://upload.wikimedia.org/wikipedia/commons/f/f8/Lesbian_pride_flag_2018.svg", colors: [0xec7424, 0xa40464, 0xd464a4]},
+			{name: "Nonbinary", flag: "https://upload.wikimedia.org/wikipedia/commons/7/75/Nonbinary_flag.svg", colors: [0x9c5ccc, 0xfcf434, 0x2c2c2c]},
+			{name: "Omnisexual", flag: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Omnisexuality_flag.svg", colors: [0x24044c, 0xfc54c4, 0x645cfc]},
+			{name: "Pansexual", flag: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Pansexuality_Pride_Flag.svg", colors: [0xfcdc04, 0x24b4fc, 0xfc248c]},
+			{name: "Philadelphia", flag: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Philadelphia_Pride_Flag.svg", colors: [0x74048c, 0xfc8c04, 0x7c4c14]},
+			{name: "Polysexual", flag: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Polysexuality_Pride_Flag.svg", colors: [0xf41cbc, 0x1c94f4, 0x04d46c]},
+			{name: "Rainbow", flag: "https://upload.wikimedia.org/wikipedia/commons/4/48/Gay_Pride_Flag.svg", colors: [0x048424, 0xfcec04, 0x044cfc]},
+			{name: "Transgender", flag: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Transgender_Pride_flag.svg", colors: [0x5cccfc, 0xf4acbc, 0xffffff]}
+		];
+		
+		function download(name, version = document.querySelector("select").value) {
+			window.open("../resourcepacks/" + version + "/" + name + " Pride Pack.zip", "_blank");
+		}
+		
+		for (let option of options) {
+			let optionElement = document.querySelector("#select-flag").appendChild(document.createElement("option"));
+			optionElement.value = option.name;
+			optionElement.innerText = option.name;
+		}
+		document.querySelector("#select-flag").onchange = function() {
+			swapTexture(this.value);
+			xp.src = "assets/" + this.value + "/experience.png";
+		}
+		document.querySelector("#select-flag").value = "Rainbow";
+		document.querySelector("#select-flag").onchange();
+		
+		downloadbtn.onclick = function() {
+			console.log("packs/"+document.querySelector("#select-version").value+"/" + document.querySelector("#select-flag").value + " Pride Pack.zip");
+			window.open("packs/"+document.querySelector("#select-version").value+"/" + document.querySelector("#select-flag").value + " Pride Pack.zip", "_self");
+		}
+	</script>
+</body>
+</html>
