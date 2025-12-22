@@ -85,6 +85,9 @@
 			color: black;
 			background: white;
 		}
+		@keyframes downscale-canvas-boom {
+			25% {transform: scale(1.05);}
+		}
 	</style>
 </head>
 <body>
@@ -95,20 +98,20 @@
 		<label>Flag</label><select value="Rainbow" id="select-flag"></select>
 		<br>
 		<label>Version</label><select value="75" id="select-version">
-			<option value="75">1.21.2 - 1.21.11</option>
-			<option value="34">1.20.2 - 1.21.1</option>
-			<option value="15">1.20 - 1.20.1</option>
+			<option value="75">1.21.2–1.21.11</option>
+			<option value="34">1.20.2–1.21.1</option>
+			<option value="15">1.20–1.20.1</option>
 			<option value="13">1.19.4</option>
 			<option value="12">1.19.3</option>
-			<option value="9">1.19 - 1.19.2</option>
-			<option value="8">1.18 - 1.18.2</option>
-			<option value="7">1.17 - 1.17.1</option>
-			<option value="6">1.16.2 - 1.161.5</option>
-			<option value="5">1.15 - 1.16.1</option>
-			<option value="4">1.13 - 1.14.4</option>
-			<option value="3">1.11 - 1.12.2</option>
-			<option value="2">1.9 - 1.10.2</option>
-			<option value="1">1.6.1 - 1.8.9</option>
+			<option value="9">1.19–1.19.2</option>
+			<option value="8">1.18–1.18.2</option>
+			<option value="7">1.17–1.17.1</option>
+			<option value="6">1.16.2–1.161.5</option>
+			<option value="5">1.15–1.16.1</option>
+			<option value="4">1.13–1.14.4</option>
+			<option value="3">1.11–1.12.2</option>
+			<option value="2">1.9–1.10.2</option>
+			<option value="1">1.6.1–1.8.9</option>
 		</select>
 		<br>
 		<br>
@@ -122,27 +125,29 @@
 	<script src="armor.js"></script>
 	<script>
 		let options = [
-			{name: "Acearo", flag: "https://upload.wikimedia.org/wikipedia/commons/1/12/Aroace_flag.svg", colors: [0xe48c04, 0x64acdc, 0xeccc04]},
-			{name: "Agender", flag: "https://upload.wikimedia.org/wikipedia/commons/e/ed/Agender_pride_flag.svg", colors: [0xbcc4c4, 0xb4f484, 0x040404]},
-			{name: "Aromantic", flag: "https://upload.wikimedia.org/wikipedia/commons/a/ad/Aromantic_Pride_Flag.svg", colors: [0xacd474, 0x3ca444, 0x040404]},
-			{name: "Asexual", flag: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Asexual_Pride_Flag.svg", colors: [0x840484, 0xa4a4a4, 0x040404]},
-			{name: "Bigender", flag: "https://upload.wikimedia.org/wikipedia/commons/9/92/Bigender_Flag.svg", colors: [0xc47ca4, 0xd4ccea, 0x6c84d4]},
-			{name: "Bisexual", flag: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Bisexual_Pride_Flag.svg", colors: [0x043ca4, 0x744c94, 0xd40474]},
-			{name: "Demigender", flag: "https://upload.wikimedia.org/wikipedia/commons/8/83/Deminonbinary_flag.svg", colors: [0xc4c4c4, 0x848484, 0xfcfc74]},
-			{name: "Demiromantic", flag: "https://upload.wikimedia.org/wikipedia/commons/3/36/Demiromantic_Pride_Flag.svg", left: true, colors: [0xd4d4d4, 0x040404, 0x3ca444]},
-			{name: "Demisexual", flag: "https://upload.wikimedia.org/wikipedia/commons/a/a7/Demisexual_Pride_Flag.svg", left: true, colors: [0xd4d4d4, 0x7c0474, 0x040404]},
-			{name: "Gay", flag: "https://upload.wikimedia.org/wikipedia/commons/6/66/New_Gay_Pride_Flag.svg", colors: [0x9cecc4, 0x3c1c7c, 0x544ccc]},
-			{name: "Genderfluid", flag: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Genderfluidity_Pride-Flag.svg", colors: [0xbc1cd4, 0x343cbc, 0xfc74a4]},
-			{name: "Genderqueer", flag: "https://upload.wikimedia.org/wikipedia/commons/1/1f/Genderqueer_Pride_Flag.svg", colors: [0xb47cdc, 0x4c8424, 0xfff]},
-			{name: "Intersex", flag: "https://upload.wikimedia.org/wikipedia/commons/3/38/Intersex_Pride_Flag.svg", colors: [0x7c04ac, 0xfcdc04, 0xffffff]},
-			{name: "Lesbian", flag: "https://upload.wikimedia.org/wikipedia/commons/f/f8/Lesbian_pride_flag_2018.svg", colors: [0xec7424, 0xa40464, 0xd464a4]},
-			{name: "Nonbinary", flag: "https://upload.wikimedia.org/wikipedia/commons/7/75/Nonbinary_flag.svg", colors: [0x9c5ccc, 0xfcf434, 0x2c2c2c]},
-			{name: "Omnisexual", flag: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Omnisexuality_flag.svg", colors: [0x24044c, 0xfc54c4, 0x645cfc]},
-			{name: "Pansexual", flag: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Pansexuality_Pride_Flag.svg", colors: [0xfcdc04, 0x24b4fc, 0xfc248c]},
-			{name: "Philadelphia", flag: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Philadelphia_Pride_Flag.svg", colors: [0x74048c, 0xfc8c04, 0x7c4c14]},
-			{name: "Polysexual", flag: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Polysexuality_Pride_Flag.svg", colors: [0xf41cbc, 0x1c94f4, 0x04d46c]},
-			{name: "Rainbow", flag: "https://upload.wikimedia.org/wikipedia/commons/4/48/Gay_Pride_Flag.svg", colors: [0x048424, 0xfcec04, 0x044cfc]},
-			{name: "Transgender", flag: "https://upload.wikimedia.org/wikipedia/commons/b/b0/Transgender_Pride_flag.svg", colors: [0x5cccfc, 0xf4acbc, 0xffffff]}
+			{name: "Acearo", colors: [0xe48c04, 0x64acdc, 0xeccc04]},
+			{name: "Agender", colors: [0xbcc4c4, 0xb4f484, 0x040404]},
+			{name: "Aromantic", colors: [0xacd474, 0x3ca444, 0x040404]},
+			{name: "Asexual", colors: [0x840484, 0xa4a4a4, 0x040404]},
+			{name: "Bear", colors: [0x623500, 0xD66300, 0xFEDE63]},
+			{name: "Bigender", colors: [0xc47ca4, 0xd4ccea, 0x6c84d4]},
+			{name: "Bisexual", colors: [0x043ca4, 0x744c94, 0xd40474]},
+			{name: "Demigender", colors: [0xc4c4c4, 0x848484, 0xfcfc74]},
+			{name: "Demiromantic", colors: [0xd4d4d4, 0x040404, 0x3ca444]},
+			{name: "Demisexual", colors: [0xd4d4d4, 0x7c0474, 0x040404]},
+			{name: "Gay", colors: [0x9cecc4, 0x3c1c7c, 0x544ccc]},
+			{name: "Genderfluid", colors: [0xbc1cd4, 0x343cbc, 0xfc74a4]},
+			{name: "Genderqueer", colors: [0xb47cdc, 0x4c8424, 0xfff]},
+			{name: "Intersex", colors: [0x7c04ac, 0xfcdc04, 0xffffff]},
+			{name: "Lesbian", colors: [0xec7424, 0xa40464, 0xd464a4]},
+			{name: "Nonbinary", colors: [0x9c5ccc, 0xfcf434, 0x2c2c2c]},
+			{name: "Omnisexual", colors: [0x24044c, 0xfc54c4, 0x645cfc]},
+			{name: "Pansexual", colors: [0xfcdc04, 0x24b4fc, 0xfc248c]},
+			{name: "Philadelphia", colors: [0x74048c, 0xfc8c04, 0x7c4c14]},
+			{name: "Polysexual", colors: [0xf41cbc, 0x1c94f4, 0x04d46c]},
+			{name: "Progress", colors: [0x70D1E7, 0xDD0303, 0xF8E601]},
+			{name: "Rainbow", colors: [0x048424, 0xfcec04, 0x044cfc]},
+			{name: "Transgender", colors: [0x5cccfc, 0xf4acbc, 0xffffff]}
 		];
 		
 		function download(name, version = document.querySelector("select").value) {
@@ -157,6 +162,10 @@
 		document.querySelector("#select-flag").onchange = function() {
 			swapTexture(this.value);
 			xp.src = "assets/" + this.value + "/experience.png";
+			document.querySelector("#downscale-canvas").style.animation = "none";
+			setTimeout(function() {
+				document.querySelector("#downscale-canvas").style.animation = "0.35s downscale-canvas-boom";
+			}, 10);
 		}
 		document.querySelector("#select-flag").value = "Rainbow";
 		document.querySelector("#select-flag").onchange();

@@ -13,6 +13,7 @@ palettes = [
 	"Agender",
 	"Aromantic",
 	"Asexual",
+	"Bear",
 	"Bigender",
 	"Bisexual",
 	"Demigender",
@@ -28,6 +29,7 @@ palettes = [
 	"Pansexual",
 	"Philadelphia",
 	"Polysexual",
+	"Progress",
 	"Rainbow",
 	"Transgender"
 ]
