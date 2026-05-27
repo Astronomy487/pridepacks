@@ -1,4 +1,4 @@
-import os, shutil, zipfile, json
+import os, shutil, zipfile, json, random
 from PIL import Image
 
 for filename in os.listdir("packs"):
@@ -29,7 +29,8 @@ palettes = [
 	"Pansexual",
 	"Philadelphia",
 	"Polysexual",
-	"Progress",
+	"Progress 2018",
+	"Progress 2021",
 	"Rainbow",
 	"Transgender"
 ]
@@ -95,7 +96,7 @@ make_pack(13)
 make_pack(15)
 
 make_pack(34, use_old_icons_png = False, supported_formats = [18, 34])
-make_pack(75, use_old_icons_png = False, supported_formats = [42, 75], use_old_elytra_location = False)
+make_pack(84, use_old_icons_png = False, supported_formats = [42, 84], use_old_elytra_location = False)
 
 for temp_icons_path in temp_icons_paths:
 	os.remove(temp_icons_path)
